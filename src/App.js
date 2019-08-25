@@ -5,6 +5,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 
 import CreateGame from "./components/create-game.component";
 import EditGame from "./components/edit-game.component";
+import DeleteGame from "./components/delete-game.component";
 import GamesList from "./components/games-list.component";
 
 import logo from "./logo.png";
@@ -25,10 +26,7 @@ class App extends Component {
 									<Link to="/" className="nav-link">Games</Link>
 								</li>
 								<li className="navbar-item">
-									<Link to="/create" className="nav-link">Create Game</Link>
-								</li>
-								<li className="navbar-item">
-									<Link to="/edit/1" className="nav-link">Edit Game</Link>
+									<Link to="/create" className="nav-link">Add Game</Link>
 								</li>
 							</ul>
 						</div>
@@ -37,6 +35,7 @@ class App extends Component {
 					<Route path="/" exact component={GamesList} />
 					<Route path="/edit/:id" component={EditGame} />
 					<Route path="/create" component={CreateGame} />
+					<Route path="/delete/:id" component={DeleteGame} />
 				</div>
 			</Router>
 	    );

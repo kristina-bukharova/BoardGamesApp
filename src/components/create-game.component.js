@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import axios from 'axios';
 
 export default class CreateGame extends Component {
    
@@ -70,14 +71,29 @@ export default class CreateGame extends Component {
         console.log(`Game Category: ${this.state.game_category}`);
         console.log(`Game Rating: ${this.state.game_rating}`);
         
-        this.state = {
+		const newGame = {
+			game_name : this.state.game_name,
+			game_category : this.state.game_category,
+			game_rating : this.state.game_rating,
+			game_min_players : this.state.game_min_players,
+			game_max_players : this.state.game_max_players,
+			game_time : this.state.game_time
+		}
+		
+		 axios.post('http://localhost:4000/boardgames/add', newGame)
+            .then(res => { 
+				console.log(res.data); 
+				this.props.history.push('/'); 
+				});
+			
+        this.setState ({
             game_name: '',
+			game_category: '',
+            game_rating: '1',
             game_min_players: '',
             game_max_players: '',
-            game_time: '',
-			game_category: '',
-            game_rating: ''
-        }
+            game_time: ''
+        })
     }
 	
 	 render() {
@@ -104,11 +120,11 @@ export default class CreateGame extends Component {
 					<div className="form-group"> 
                         <label>Category: </label> {' '}
                         <select value={this.state.value} onChange={this.onChangeGameCategory}>
-							<option value ="empty"></option>
-							<option value="social">Social</option>
-							<option value="cooperative">Co-operative</option>
-							<option value="resource">Resource-based</option>
-							<option value="card">Card</option>
+							<option value =""></option>
+							<option value="Social">Social</option>
+							<option value="Co-operative">Co-operative</option>
+							<option value="Resource-based">Resource-based</option>
+							<option value="Card">Card</option>
 						</select>
                     </div>
                     <div className="form-group">
