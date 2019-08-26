@@ -3,7 +3,7 @@ import axios from 'axios';
 
 export default class EditGame extends Component {
 	
-	 constructor(props) {
+	constructor(props) {
         super(props);
 		
 		this.onChangeGameName = this.onChangeGameName.bind(this);
@@ -20,7 +20,11 @@ export default class EditGame extends Component {
             game_max_players: '',
             game_time: '',
 			game_category: '',
-            game_rating: '1'
+            game_rating: '',
+			errors : {
+				game_name: '',
+				game_time: ''
+			}
         }
     }
 	
@@ -91,14 +95,53 @@ export default class EditGame extends Component {
 		
 		console.log(updatedGame);
 		
-		axios.put('http://localhost:4000/boardgames/update/'+this.props.match.params.id, updatedGame)
-            .then(res => { 
-				console.log(res.data); 
-				this.props.history.push('/'); 
-				});
+		if (this.inputIsValid()) {
+			axios.put('http://localhost:4000/boardgames/update/'+this.props.match.params.id, updatedGame)
+				.then(res => { 
+					console.log(res.data); 
+					this.props.history.push('/'); 
+					});
+		}
     }
 	
+	inputIsValid() {
+		let isValid = true;
+		
+		const {
+			game_name,
+            game_time
+		} = this.state;
+		
+		let errors = {
+			game_name: '',
+            game_time: ''
+		}
+		
+		if (!game_name.trim()) {
+			errors.game_name = 'Name is a required field';
+			isValid = false;
+		}
+		
+		if (!game_time) {
+			errors.game_time = 'Time is a required field';
+			isValid = false;
+		} else if (isNaN(game_time)) {
+			errors.game_time = 'Time must be a number';
+			isValid = false;
+		} else if (game_time <= 0) {
+			errors.game_time = 'Time must be a positive number greater than 0';
+			isValid = false;
+		} else if (game_time > 900) {
+			errors.game_time = "That's a very long board game! Are you sure you didn't make a typo?";
+			isValid = false;
+		}
+		
+		this.setState({errors});
+		return isValid;
+	}
+	
     render() {
+		const { errors } = this.state;
         return (
             <div>
                 <h3 align="center">Update Game</h3>
@@ -106,23 +149,29 @@ export default class EditGame extends Component {
                     <div className="form-group"> 
                         <label>Name: </label>
                         <input  type="text"
-                                className="form-control"
+                                className={errors.game_name != '' ? 'form-control is-invalid' : 'form-control'}
                                 value={this.state.game_name}
                                 onChange={this.onChangeGameName}
                                 />
+						<div class="invalid-feedback">
+							{this.state.errors.game_name}
+						</div>
                     </div>
 					<div className="form-group"> 
                         <label>Time (in minutes): </label>
                         <input  type="text"
-                                className="form-control"
+                                className={errors.game_time != '' ? 'form-control is-invalid' : 'form-control'}
                                 value={this.state.game_time}
                                 onChange={this.onChangeGameTime}
                                 />
+						<div class="invalid-feedback">
+							{this.state.errors.game_time}
+						</div>
                     </div>
 					<div className="form-group"> 
                         <label>Category: </label> {' '}
-                        <select value={this.state.value} onChange={this.onChangeGameCategory}>
-							<option value =""></option>
+                        <select value={this.state.game_category} onChange={this.onChangeGameCategory}>
+							<option value ="">None</option>
 							<option value="Social">Social</option>
 							<option value="Co-operative">Co-operative</option>
 							<option value="Resource-based">Resource-based</option>
@@ -131,20 +180,18 @@ export default class EditGame extends Component {
                     </div>
                     <div className="form-group">
                         <label>Players: </label> {' '}
-                        <select value={this.state.value} onChange={this.onChangeGameMinPlayers}>
-							<option value ="empty"></option>
+                        <select value={this.state.game_min_players} onChange={this.onChangeGameMinPlayers}>
 							<option value="1">1</option>
 							<option value="2">2</option>
 							<option value="3">3</option>
 							<option value="4">4</option>
 						</select>
 						{' '} <label>to</label> {' '}
-						<select value={this.state.value} onChange={this.onChangeGameMaxPlayers}>
-							<option value ="empty"></option>
-							<option value="1">1</option>
-							<option value="2">2</option>
-							<option value="3">3</option>
-							<option value="4">4</option>
+						<select value={this.state.game_max_players} onChange={this.onChangeGameMaxPlayers}>
+							<option disabled={this.state.game_min_players > 1 ? true : null} value="1">1</option>
+							<option disabled={this.state.game_min_players > 2 ? true : null} value="2">2</option>
+							<option disabled={this.state.game_min_players > 3 ? true : null} value="3">3</option>
+							<option disabled={this.state.game_min_players > 4 ? true : null} value="4">4</option>
 							<option value="5">5</option>
 							<option value="6">6</option>
 							<option value="7">7</option>
@@ -154,13 +201,24 @@ export default class EditGame extends Component {
                     <div className="form-group">
 						<label>Rating: </label>
 						<br></br>
+						<div className="form-check form-check-inline">
+                            <input  className="form-check-input" 
+                                    type="radio" 
+                                    name="ratingOptions" 
+                                    id="oneStar" 
+                                    value=""
+                                    checked={!this.state.game_rating} 
+                                    onChange={this.onChangeGameRating}
+                                    />
+                            <label className="form-check-label">None</label>
+                        </div>
                         <div className="form-check form-check-inline">
                             <input  className="form-check-input" 
                                     type="radio" 
                                     name="ratingOptions" 
                                     id="oneStar" 
                                     value='1'
-                                    checked={this.state.game_rating==='1'} 
+                                    checked={this.state.game_rating=='1'} 
                                     onChange={this.onChangeGameRating}
                                     />
                             <label className="form-check-label">1</label>
@@ -171,7 +229,7 @@ export default class EditGame extends Component {
                                     name="ratingOptions" 
                                     id="twoStars" 
                                     value='2' 
-                                    checked={this.state.game_rating==='2'} 
+                                    checked={this.state.game_rating=='2'} 
                                     onChange={this.onChangeGameRating}
                                     />
                             <label className="form-check-label">2</label>
@@ -182,7 +240,7 @@ export default class EditGame extends Component {
                                     name="ratingOptions" 
                                     id="threeStars" 
                                     value='3'
-                                    checked={this.state.game_rating==='3'} 
+                                    checked={this.state.game_rating=='3'} 
                                     onChange={this.onChangeGameRating}
                                     />
                             <label className="form-check-label">3</label>
@@ -193,7 +251,7 @@ export default class EditGame extends Component {
                                     name="ratingOptions" 
                                     id="fourStars" 
                                     value='4'
-                                    checked={this.state.game_rating==='4'} 
+                                    checked={this.state.game_rating=='4'} 
                                     onChange={this.onChangeGameRating}
                                     />
                             <label className="form-check-label">4</label>
@@ -204,7 +262,7 @@ export default class EditGame extends Component {
                                     name="ratingOptions" 
                                     id="fiveStars" 
                                     value='5'
-                                    checked={this.state.game_rating==='5'} 
+                                    checked={this.state.game_rating=='5'} 
                                     onChange={this.onChangeGameRating}
                                     />
                             <label className="form-check-label">5</label>

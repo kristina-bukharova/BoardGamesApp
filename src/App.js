@@ -17,7 +17,7 @@ class App extends Component {
 				<div className="container">
 					<nav className="navbar navbar-expand-lg navbar-light bg-light">
 						<a className="navbar-brand" href="https://theuselessweb.com/" target="_blank">
-							<img src={logo} width="50" height="50" alt="CodingTheSmartWay.com" />
+							<img src={logo} width="50" height="50" />
 						</a>
 						<Link to="/" className="navbar-brand">MERN-Stack Games App</Link>
 						<div className="collpase navbar-collapse">
