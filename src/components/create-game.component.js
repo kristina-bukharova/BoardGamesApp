@@ -85,7 +85,7 @@ export default class CreateGame extends Component {
 				game_time : this.state.game_time
 			}
 			
-			 axios.post('http://localhost:4000/boardgames/add', newGame)
+			axios.post('http://localhost:4000/boardgames/add', newGame)
 				.then(res => { 
 					console.log(res.data); 
 					this.props.history.push('/'); 

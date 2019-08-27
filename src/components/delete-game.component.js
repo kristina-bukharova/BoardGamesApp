@@ -11,6 +11,7 @@ export default class DeleteGame extends Component {
     delete() {
         axios.delete('http://localhost:4000/boardgames/delete/'+this.props.match.params.id)
             .then(console.log('Deleted'))
+			.then(this.props.history.push('/'))
             .catch(err => console.log(err))
 			
 		this.props.history.push('/');

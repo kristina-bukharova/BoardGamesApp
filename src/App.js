@@ -7,6 +7,7 @@ import CreateGame from "./components/create-game.component";
 import EditGame from "./components/edit-game.component";
 import DeleteGame from "./components/delete-game.component";
 import GamesList from "./components/games-list.component";
+import FilterGames from "./components/filter-games.component";
 
 import logo from "./logo.png";
 
@@ -28,6 +29,9 @@ class App extends Component {
 								<li className="navbar-item">
 									<Link to="/create" className="nav-link">Add Game</Link>
 								</li>
+								<li className="navbar-item">
+									<Link to="/search" className="nav-link">Search Games</Link>
+								</li>
 							</ul>
 						</div>
 					</nav>
@@ -36,6 +40,7 @@ class App extends Component {
 					<Route path="/edit/:id" component={EditGame} />
 					<Route path="/create" component={CreateGame} />
 					<Route path="/delete/:id" component={DeleteGame} />
+					<Route path="/search/" component={FilterGames} />
 				</div>
 			</Router>
 	    );

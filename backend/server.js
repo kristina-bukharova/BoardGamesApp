@@ -28,6 +28,17 @@ gameRoutes.route('/').get(function(req, res) {
     });
 });
 
+gameRoutes.route('/search').get(function(req, res) {
+	let filter = req.query;
+    Boardgames.find(filter, function(err, games) {
+        if (!games) {
+            res.status(400).json(err);
+        } else {
+            res.status(200).json(games);
+        }
+    });
+});
+
 gameRoutes.route('/:id').get(function(req, res) {
     let id = req.params.id;
     Boardgames.findById(id, function(err, game) {
@@ -60,19 +71,19 @@ gameRoutes.route('/delete/:id').delete(function(req, res) {
 		if (err) {
             res.status(400).send(err);
 		}
-		if (!user) 
+		if (!user) {
 			res.status(404).send("Game does not exist");
-		else 
+		} else {
 			res.status(200).json({ message: 'Deleted' });
-			
+		}			
 	});
 });
 
 gameRoutes.route('/update/:id').put(function(req, res) {
     Boardgames.findById(req.params.id, function(err, game) {
-        if (!game)
+        if (!game) {
             res.status(404).send("Game not found");
-        else
+		} else {
             game.game_name = req.body.game_name;
             game.game_category = req.body.game_category;
             game.game_rating = req.body.game_rating;
@@ -86,6 +97,7 @@ gameRoutes.route('/update/:id').put(function(req, res) {
             .catch(err => {
                 res.status(400).send("Update not possible");
             });
+		}
     });
 });
 	
