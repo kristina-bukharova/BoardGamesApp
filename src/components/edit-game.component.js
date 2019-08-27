@@ -50,9 +50,15 @@ export default class EditGame extends CreateGame {
 	
     render() {
 		return (
-			<div>
-				{ super.render() }
-			</div>
+            <div style={{marginTop: 10}}>
+                <h3>Edit Game</h3>
+                <form onSubmit={this.onSubmit}>
+                    {super.gameInfoForm()}
+                    <div className="form-group">
+                        <input type="submit" value="Edit Game" className="btn btn-primary" />
+                    </div>
+                </form>
+            </div>
         )
     }
 }
