@@ -4,48 +4,18 @@ import axios from 'axios';
 
 import edit_icon from "./edit.png";
 import delete_icon from "./delete.png";
-import {Boardgame} from "./games-list.component.js"
+import {Boardgame} from "./games-list.component"
+import GamesList from "./games-list.component"
 
-export default class FilterGames extends Component {
+export default class FilterGames extends GamesList {
 	
-	 constructor(props) {
+	constructor(props) {
         super(props);
         this.state = {games: [], search_field: '', search_value: '', isSubmitted: false};
 		
 		this.onChangeSearchField = this.onChangeSearchField.bind(this);
 		this.onChangeSearchValue = this.onChangeSearchValue.bind(this);
 		this.onSubmit = this.onSubmit.bind(this);
-    }
-
-	gamesList() {
-        return this.state.games.map(function(currentGame, i){
-            return <Boardgame game={currentGame} key={i} />;
-        })
-    }
-	
-	setUpTable() {
-        return (
-				<div>
-                <h3>Games List</h3>
-                <table className="table table-striped" style={{ marginTop: 20 }} >
-                    <thead>
-                        <tr>
-                            <th>Name</th>
-                            <th>Category</th>
-                            <th>Rating</th>
-                            <th>Minimum players</th>
-                            <th>Maximum players</th>
-                            <th>Time Required</th>
-							<th>Edit</th>
-							<th>Delete</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        { this.gamesList() }
-                    </tbody>
-                </table>
-            </div>
-		)
     }
 		
 	onChangeSearchField(e) {
@@ -119,7 +89,7 @@ export default class FilterGames extends Component {
 							<input type="submit" value="Search" className="btn btn-primary" />
 						</div>
 				</form>
-                { this.state.isSubmitted && this.setUpTable() }
+                { this.state.isSubmitted && super.setUpTable() }
 			</div>
         )
     }

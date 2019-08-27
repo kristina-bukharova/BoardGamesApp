@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import axios from 'axios';
-import CreateGame from "./create-game.component.js"
+import CreateGame from "./create-game.component"
 
 export default class EditGame extends CreateGame {
 	
