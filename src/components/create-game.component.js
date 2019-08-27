@@ -138,7 +138,7 @@ export default class CreateGame extends Component {
 		return isValid;
 	}
 	
-	 render() {
+	render() {
 		const { errors } = this.state;
         return (
             <div style={{marginTop: 10}}>

@@ -4,27 +4,7 @@ import axios from 'axios';
 
 import edit_icon from "./edit.png";
 import delete_icon from "./delete.png";
-
-const Boardgame = props => (
-	<tr>
-		<td className={props.game.game_rating === 5 ? 'greatgame' : ''}>{props.game.game_name}</td>
-		<td className={props.game.game_rating === 5 ? 'greatgame' : ''}>{props.game.game_category}</td>
-		<td className={props.game.game_rating === 5 ? 'greatgame' : ''}>{props.game.game_rating}</td>
-		<td className={props.game.game_rating === 5 ? 'greatgame' : ''}>{props.game.game_min_players}</td>
-		<td className={props.game.game_rating === 5 ? 'greatgame' : ''}>{props.game.game_max_players}</td>
-		<td className={props.game.game_rating === 5 ? 'greatgame' : ''}>{props.game.game_time}</td>
-		<td>
-			<Link to={"/edit/"+props.game._id}>
-				<img src={edit_icon} width="20" height="20" />
-			</Link>
-		</td>
-		<td>
-			<Link to={"/delete/"+props.game._id}>
-				<img src={delete_icon} width="20" height="23" />
-			</Link>
-		</td>
-	</tr>
-)
+import {Boardgame} from "./games-list.component.js"
 
 export default class FilterGames extends Component {
 	

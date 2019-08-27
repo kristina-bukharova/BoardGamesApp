@@ -2,11 +2,10 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
 
-
 import edit_icon from "./edit.png";
 import delete_icon from "./delete.png";
 
-const Boardgame = props => (
+export const Boardgame = props => (
 	<tr>
 		<td className={props.game.game_rating === 5 ? 'greatgame' : ''}>{props.game.game_name}</td>
 		<td className={props.game.game_rating === 5 ? 'greatgame' : ''}>{props.game.game_category}</td>
@@ -26,10 +25,10 @@ const Boardgame = props => (
 		</td>
 	</tr>
 )
-
+	
 export default class GamesList extends Component {
 	
-	 constructor(props) {
+	constructor(props) {
         super(props);
         this.state = {games: []};
     }
@@ -50,28 +49,38 @@ export default class GamesList extends Component {
         })
     }
 	
-    render() {
-        return (
-            <div>
-                <h3>Games List</h3>
-                <table className="table table-striped" style={{ marginTop: 20 }} >
-                    <thead>
-                        <tr>
-                            <th>Name</th>
-                            <th>Category</th>
-                            <th>Rating</th>
-                            <th>Minimum players</th>
-                            <th>Maximum players</th>
-                            <th>Time Required</th>
+	setUpTable() {
+		return (
+				<div>
+				<h3>Games List</h3>
+				<table className="table table-striped" style={{ marginTop: 20 }} >
+					<thead>
+						<tr>
+							<th>Name</th>
+							<th>Category</th>
+							<th>Rating</th>
+							<th>Minimum players</th>
+							<th>Maximum players</th>
+							<th>Time Required</th>
 							<th>Edit</th>
 							<th>Delete</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        { this.gamesList() }
-                    </tbody>
-                </table>
-            </div>
+						</tr>
+					</thead>
+					<tbody>
+						{ this.gamesList() }
+					</tbody>
+				</table>
+			</div>
+		)
+	}
+	
+    render() {
+        return (
+			<div>
+				{ this.setUpTable() }
+			</div>
         )
     }
+	
 }
+
