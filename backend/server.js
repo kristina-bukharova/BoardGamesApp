@@ -38,15 +38,23 @@ gameRoutes.route('/').get(function(req, res) {
 
 gameRoutes.route('/search').get(function(req, res) {
 	let filter = req.query;
-    Boardgames.find(filter, function(err, games) {
+	
+	var filterCriteria = filter;
+	if (Object.keys(filter).includes("game_name")) {
+		filterCriteria = {'game_name' : new RegExp(filter.game_name, 'i')};
+	} else if (Object.keys(filter).includes("game_time")) {
+		filterCriteria = { game_time : { $lte : filter.game_time}};
+	} 
+	
+	Boardgames.find(filterCriteria, function(err, games) {
 		if (err) {
 			res.status(400).send(err);
 		} else if (!games) {
-            res.status(404).json(err);
-        } else {
-            res.status(200).json(games);
-        }
-    });
+			res.status(404).json(err);
+		} else {
+			res.status(200).json(games);
+		}
+	});
 });
 
 gameRoutes.route('/:id').get(function(req, res) {

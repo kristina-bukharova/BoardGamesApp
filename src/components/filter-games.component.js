@@ -64,7 +64,8 @@ export default class FilterGames extends GamesList {
 								<option value="game_category">category</option>
 							</select>
 							
-							{' '}<label>is</label>{' '}
+							{' '}<label className={this.state.search_field === "game_time"? "d-none" : null}>is</label>{' '}
+							{' '}<label className={this.state.search_field === "game_time"? null : "d-none"}>is less than or equal to</label>{' '}
 							
 							<input  type="text"
 									className={this.state.search_field === "game_category"? "d-none" : null}
