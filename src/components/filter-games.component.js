@@ -37,19 +37,14 @@ export default class FilterGames extends GamesList {
 		axios.get('http://localhost:4000/boardgames/search?' + this.state.search_field + "=" + this.state.search_value)
 				.then(res => { 
 					this.setState({ games: res.data });
-					this.setState({isSubmitted: true});
+					this.setState({ isSubmitted: true });
 					console.log(this.state.games);
 				})
-				.catch(function (error){
+				.catch((error) => {
 					console.log(error);
-				})
-
-		this.setState ({
-			games: [], 
-			search_field: '', 
-			search_value: '', 
-			isSubmitted: false
-		})		
+					this.setState({ games: [] });
+					this.setState({ isSubmitted: true });
+				});
 	}
 
     render() {

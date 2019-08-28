@@ -27,7 +27,7 @@ connection.on('error', err => {
 gameRoutes.route('/').get(function(req, res) {
     Boardgames.find(function(err, games) {
 		if (err) {
-			res.status(500).send(err);
+			res.status(400).send(err);
 		} else if (!games) {
             res.status(404).json(err);
         } else {
@@ -40,7 +40,7 @@ gameRoutes.route('/search').get(function(req, res) {
 	let filter = req.query;
     Boardgames.find(filter, function(err, games) {
 		if (err) {
-			res.status(500).send(err);
+			res.status(400).send(err);
 		} else if (!games) {
             res.status(404).json(err);
         } else {
