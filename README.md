@@ -7,27 +7,27 @@ Includes input validation.
 
 # Screenshots
 
-#### Home page: 
+### Home page: 
 
 ![Home page](/screenshots/gameslist.png?raw=true)
 
-#### Add game:  
+### Add game:  
 
 ![Add game](/screenshots/addgamevalidation.png?raw=true)
 
-#### Edit game:  
+### Edit game:  
 
 ![Edit game](/screenshots/editgame.png?raw=true)
 
-#### Search games: 
+### Search games: 
  
 ![Search games](/screenshots/filtergameshome.png?raw=true)
 
-#### Search results (example 1):  
+### Search results (example 1):  
 
 ![Search results (example 1)](/screenshots/filtergames1.png?raw=true)
 
-#### Search results (example 2):  
+### Search results (example 2):  
 
 ![Search results (example 2)](/screenshots/filtergames2.png?raw=true)
   
