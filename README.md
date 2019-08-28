@@ -30,6 +30,14 @@ Includes input validation.
 ### Search results (example 2):  
 
 ![Search results (example 2)](/screenshots/filtergames2.png?raw=true)
+
+### Search results (example 3):  
+
+![Search results (example 3)](/screenshots/filtergames3.png?raw=true)
+
+### Search results (example 4):  
+
+![Search results (example 4)](/screenshots/filtergames4.png?raw=true)
   
   
 The groundwork for this project was built based on the tutorial at: 
